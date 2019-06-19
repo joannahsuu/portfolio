@@ -4,9 +4,10 @@
     .navbar__logo
       //- img.navbar__meow(:src="logo")
     .navbar__items.desktop
-      p.navbar__item box1
-      p.navbar__item(@click="scrollToBox") box2
-      p.navbar__item box3
+      p.navbar__item(@click="scrollTo('ABOUT')") ABOUT
+      p.navbar__item(@click="scrollToSkill") SKILLS
+      p.navbar__item(@click="scrollToWork") WORK
+      p.navbar__item(@click="scrollToContact") CONTACT
     .navbar__items.mobile
       p hi
   //- top
@@ -22,25 +23,69 @@
     header
       h1.box2__header ABOUT ME
     main
-      p.box2__content 樂於學習新事物，在學習的過程中總會面對困境或是挫折，我相信過程中所經歷的，都會是使人成長的養分。
-      p.box2__content 喜歡觀察生活中的大小人事物，將所觀察到的應用於開發上，開發出不單單只提供基本功能而更加強於用戶體驗流程。
+      .box2__content.aboutmeimg(:style="aboutmebg")
+      .box2__content
+        p 樂於學習新事物，在學習的過程中總會面對困境或是挫折，我相信過程中所經歷的，都會是使人成長的養分。
+        p 喜歡觀察生活中的大小人事物，將所觀察到的應用於開發上，開發出不單單只提供基本功能而更加強於用戶體驗流程。
+        p
+         button.box2__btn.resume RESUME
+         button.box2__btn.github
+          icon.icon__git(name="icon-github")
+          span GITHUB
   .parallax__box3
-    p skills
+    header
+      h1.box3__header SKILLS
+    main
+      skill-box(
+        v-for="i in 3"
+        :key="i")
+      //- .skills__box
+        p
+          icon(name="icon-web-development")
+        h4 網頁開發
+        p xxx
+      //- .skills__box 2
+      //- .skills__box 3
   .parallax__box4
-    p hello4
+    header
+      h1.box4__header WORK
+    main
+      work-box(
+        v-for="i in 5"
+        :key="i")
+      //- .work__box hi
+      //- .work__box hi
+      //- .work__box hi
+      //- .work__box hi
+      //- .work__box hi
+      //- .work__box hi
+  .parallax__box5
+    header
+      h1.box5__header CONTACT
+    main
+      .work__box hi
 </template>
 
 <script>
 import box1 from '@/assets/images/common/bg_main.jpeg'
+import aboutme from '@/assets/images/common/aboutme.jpg'
 import logo from '@/assets/images/common/profile_meow.svg'
+
+import skillBox from './skills'
+import workBox from './work'
 
 export default {
   name: 'home',
+  components: {
+    skillBox,
+    workBox,
+  },
   data() {
     return {
       page: 'HOME',
       box1,
       logo,
+      aboutme,
     }
   },
   computed: {
@@ -70,14 +115,62 @@ export default {
       }
       return 0
     },
+    box4Position() {
+      const box = document.querySelector('.parallax__box4')
+      if (box) {
+        return box.offsetTop
+      }
+      return 0
+    },
+    box5Position() {
+      const box = document.querySelector('.parallax__box5')
+      if (box) {
+        return box.offsetTop
+      }
+      return 0
+    },
+    aboutmebg() {
+      return {
+        backgroundImage: `url(${this.aboutme})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }
+    },
   },
   methods: {
-    scrollToBox(el) {
+    scrollTo(target) {
+      console.log('scrollTo', target)
+    },
+    scrollToAbout(el) {
       console.log('scrollToBox', el)
       // console.log('scrollToBox', this.box2Position)
       const ele = document.querySelector('.home__container')
       this.$nextTick(() => {
         ele.scrollTop = this.box2Position - 80
+      })
+    },
+    scrollToSkill(el) {
+      console.log('scrollToBox', el)
+      // console.log('scrollToBox', this.box2Position)
+      const ele = document.querySelector('.home__container')
+      this.$nextTick(() => {
+        ele.scrollTop = this.box3Position - 80
+      })
+    },
+    scrollToWork(el) {
+      console.log('scrollToBox', el)
+      // console.log('scrollToBox', this.box2Position)
+      const ele = document.querySelector('.home__container')
+      this.$nextTick(() => {
+        ele.scrollTop = this.box4Position - 80
+      })
+    },
+    scrollToContact(el) {
+      console.log('scrollToBox', el)
+      // console.log('scrollToBox', this.box2Position)
+      const ele = document.querySelector('.home__container')
+      this.$nextTick(() => {
+        ele.scrollTop = this.box5Position - 80
       })
     },
   },
@@ -87,6 +180,7 @@ export default {
 <style lang="sass">
 $fill-color: #dedede
 $light-color: #fb594d
+$mild-color: #f6f7f2
 
 .home
   &__container
@@ -116,7 +210,12 @@ $light-color: #fb594d
     +size(60%, 100%)
     +flex(center, flex-end, row)
   &__item
-    width: rem(25%)
+    width: rem(20%)
+    height: 100%
+    line-height: 5rem
+    transition: all .3s ease-out
+    &:hover
+      background: #909090
 
 .mobile
   display: none
@@ -180,8 +279,7 @@ $light-color: #fb594d
     // background-size: cover
     // display: table
     background-attachment: fixed
-    // *
-    border: 1px solid black
+    text-align: left
     header
       +flex(center, center, column)
       width: 100%
@@ -189,18 +287,63 @@ $light-color: #fb594d
     main
       flex: 4
       width: 100%
+      +flex
   &__box3
-    height: calc(100vh - 5rem)
+    +flex(center, center, column)
+    // height: calc(100vh - 5rem)
+    height: 80vh
     width: 100%
-    background-color: $light-color
+    background-color: $mild-color
     background-attachment: fixed
+    header
+      +flex(center, center, column)
+      width: 100%
+      flex: 1
+    main
+      border: 1px solid
+      flex: 4
+      width: 100%
+      +flex(center, center, row)
+      padding: rem(20px 10px)
   &__box4
-    height: calc(100vh - 5rem)
+    +flex(center, center, column)
+    // height: calc(100vh - 5rem)
+    height: auto
     width: 100%
     background-color: $white
     background-attachment: fixed
+    header
+      +flex(center, center, column)
+      width: 100%
+      h1
+        margin: rem(30px 0)
+      // flex: 1
+    main
+      +flex(flex-start, flex-start, row)
+      border: 1px solid
+      // flex: 4
+      flex-wrap: wrap
+      width: 100%
+      padding: rem(20px calc((100% - 960px) /3))
+  &__box5
+    +flex(center, center, column)
+    // height: calc(100vh - 5rem)
+    height: 60vh
+    width: 100%
+    background-color: $mild-color
+    background-attachment: fixed
+    header
+      +flex(center, center, column)
+      width: 100%
+      flex: 1
+    main
+      border: 1px solid
+      flex: 4
+      width: 100%
+      +flex(center, center, row)
+      padding: rem(20px 10px)
 
-.box2
+.box2, .box3, .box4, .box5
   &__header
     font-size: rem(24px)
     position: relative
@@ -218,8 +361,42 @@ $light-color: #fb594d
       bottom: 0
       left: rem(-8px)
   &__content
-    padding: rem(10px 80px)
     font-size: rem(16px)
+    flex: 1
+    margin: rem(5px)
+    p
+      padding: rem(10px 40px)
+      +flex
+  &__btn
+    +size(rem(100px), rem(40px))
+    +flex(center, center, row)
+    margin-right: rem(10px)
+    transition: all .3s ease-out
+    letter-spacing: 1px
+    font-weight: 500
+    &.resume
+      +button(rem(100px), rem(40px), $white, #323234)
+      &:hover
+        +size(rem(100px), rem(40px))
+        background: #9e9e9e
+    &.github
+      +button(rem(100px), rem(40px), #323234, $white)
+      border: 2px solid #323234
+      &:hover
+        +button(rem(100px), rem(40px), $white, #9e9e9e)
+        border: 0
+
+.box3, .box5
+  &__header
+    &:before, &:after
+      background: $light-color
+
+// .skills
+//   &__box
+//     border: 1px solid
+//     margin: rem(0px 20px)
+//     +size(rem(350px), rem(400px))
+//     background: $white
 
 @keyframes drop
   0%
@@ -232,12 +409,18 @@ $light-color: #fb594d
     top: 25px
     opacity: 0
 
+.icon
+  &__git
+    margin: rem(0 5px)
+
 // 平板大小以下
 @media screen and (max-width:768px)
   .desktop
     display: none
   .mobile
     display: block
+  .aboutmeimg
+    display: none
   // .navbar
   //   &__items
   //     display: none

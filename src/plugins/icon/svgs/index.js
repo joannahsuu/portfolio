@@ -1,3 +1,6 @@
 import './arrow-left'
 import './icon-text'
 import './icon-link'
+import './icon-github'
+import './icon-web-development'
+import './icon-framework'

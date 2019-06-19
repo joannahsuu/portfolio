@@ -4,7 +4,6 @@ import Home from './views/Home'
 
 // memory block
 import memoryBlock from '@/views/memory-block'
-import maps from '@/views/map'
 
 Vue.use(Router)
 
@@ -14,11 +13,6 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
-    },
-    {
-      path: '/maps',
-      name: 'maps',
-      component: maps,
     },
     {
       path: '/memory-block',

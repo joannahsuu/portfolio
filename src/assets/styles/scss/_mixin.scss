@@ -13,3 +13,11 @@
 @mixin ta($d: center) {
   text-align: $d;
 }
+
+@mixin button($w, $h, $color, $bg, $bdrs:0) {
+  width: $w;
+  height: $h;
+  color: $color;
+  background-color: $bg;
+  border-radius: $bdrs;
+}
