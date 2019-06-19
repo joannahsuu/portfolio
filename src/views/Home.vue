@@ -50,6 +50,7 @@
     header
       h1.box4__header WORK
     main
+      //- work-box
       work-box(
         v-for="i in 5"
         :key="i")
