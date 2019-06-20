@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home'
+import Home from '@/views/home/view/Home'
 
 // memory block
 import memoryBlock from '@/views/memory-block'
