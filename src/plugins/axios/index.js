@@ -4,7 +4,7 @@ const plugin = {
   install(Vue) {
     const $vm = Vue
     $vm.prototype.$axios = axios
-    console.log('in axios plugin', process.env.VUE_APP_API_URL)
+    // console.log('in axios plugin', process.env.VUE_APP_API_URL)
     axios.defaults.baseURL = process.env.VUE_APP_API_URL
     axios.defaults.headers.common['Content-Type'] = 'application/json'
     axios.defaults.timeout = 5000

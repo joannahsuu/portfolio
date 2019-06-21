@@ -2,14 +2,15 @@
 .home__container
   nav.navbar
     .navbar__logo
-      icon.icon__logo(name="icon-logo")
+      icon.icon__logo(
+        name="icon-logo"
+        @click.native="scrollTo('TOP')")
     .navbar__items.desktop
       p.navbar__item(@click="scrollTo('ABOUT')") ABOUT
       p.navbar__item(@click="scrollTo('SKILLS')") SKILLS
       p.navbar__item(@click="scrollTo('WORK')") WORK
       p.navbar__item(@click="scrollTo('CONTACT')") CONTACT
-    .navbar__items.mobile
-      //- p hi
+    //- .navbar__items.mobile
   //- top
   .parallax__box1(:style="boxStyle")
     .main-content
@@ -28,7 +29,7 @@
         p 樂於學習新事物，在學習的過程中總會面對困境或是挫折，我相信過程中所經歷的，都會是使人成長的養分。
         p 喜歡觀察生活中的大小人事物，將所觀察到的應用於開發上，開發出不單單只提供基本功能而更加強於用戶體驗流程。
         p
-         button.box2__btn.resume RESUME
+         button.box2__btn.resume(@click="goResume") RESUME
          button.box2__btn.github(@click="goGithub")
           icon.icon__git(name="icon-github")
           span GITHUB
@@ -62,7 +63,9 @@
           icon.icon__github__fill(
             name="icon-github-fill"
             @click.native="goGithub")
-          icon.icon__linkedin(name="icon-linkedin")
+          icon.icon__linkedin(
+            name="icon-linkedin"
+            @click.native="goLinkedin")
     footer © 2019 all rights reserved.
 </template>
 
@@ -138,12 +141,15 @@ export default {
   methods: {
     scrollTo(target) {
       const idx = areas.findIndex(area => area.name === target)
-      console.log('scrollTo', idx)
-      if (idx) {
-        const ele = document.querySelector('.home__container')
+      const ele = document.querySelector('.home__container')
+      if (idx > 0) {
         const box = document.querySelector(areas[idx].selector)
         this.$nextTick(() => {
           ele.scrollTop = box.offsetTop - 80
+        })
+      } else {
+        this.$nextTick(() => {
+          ele.scrollTop = 0
         })
       }
     },
@@ -156,6 +162,12 @@ export default {
     },
     goGithub() {
       window.open('https://github.com/joannahsuu?tab=repositories')
+    },
+    goResume() {
+      window.open('https://github.com/joannahsuu/resume/blob/master/resume_cn.pdf')
+    },
+    goLinkedin() {
+      window.open('https://www.linkedin.com/in/joanna-hsu-562b0b91/')
     },
   },
 }
